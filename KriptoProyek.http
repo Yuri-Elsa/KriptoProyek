@@ -1,0 +1,6 @@
+@KriptoProyek_HostAddress = http://localhost:5122
+
+GET {{KriptoProyek_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
