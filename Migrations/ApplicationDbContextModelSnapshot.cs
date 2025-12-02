@@ -189,15 +189,15 @@ namespace KriptoProyek.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1",
-                            ConcurrencyStamp = "ad670c67-7825-43d7-a91d-2dec0f27c4ee",
+                            Id = "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d",
+                            ConcurrencyStamp = "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "2",
-                            ConcurrencyStamp = "a9f66146-2819-4ba3-965f-32c8612701d2",
+                            Id = "b2c3d4e5-f6a7-5b6c-9d0e-1f2a3b4c5d6e",
+                            ConcurrencyStamp = "b2c3d4e5-f6a7-5b6c-9d0e-1f2a3b4c5d6e",
                             Name = "User",
                             NormalizedName = "USER"
                         });

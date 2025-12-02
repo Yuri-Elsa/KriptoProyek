@@ -19,10 +19,22 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         base.OnModelCreating(builder);
 
-        // Konfigurasi roles
+        // Konfigurasi roles dengan GUID STATIS (tidak berubah setiap build)
         builder.Entity<IdentityRole>().HasData(
-            new IdentityRole { Id = "1", Name = "Admin", NormalizedName = "ADMIN" },
-            new IdentityRole { Id = "2", Name = "User", NormalizedName = "USER" }
+            new IdentityRole 
+            { 
+                Id = "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d", 
+                Name = "Admin", 
+                NormalizedName = "ADMIN",
+                ConcurrencyStamp = "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d" // STATIS!
+            },
+            new IdentityRole 
+            { 
+                Id = "b2c3d4e5-f6a7-5b6c-9d0e-1f2a3b4c5d6e", 
+                Name = "User", 
+                NormalizedName = "USER",
+                ConcurrencyStamp = "b2c3d4e5-f6a7-5b6c-9d0e-1f2a3b4c5d6e" // STATIS!
+            }
         );
 
         // Konfigurasi UserToken
