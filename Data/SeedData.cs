@@ -21,23 +21,34 @@ namespace KriptoProyek.Data
 
             // Admin user
             var adminEmail = "admin@example.com";
+            var adminPassword = "Admin123!";
+
             var adminUser = await userManager.FindByEmailAsync(adminEmail);
+
             if (adminUser == null)
             {
-                var user = new Models.ApplicationUser
+                adminUser = new Models.ApplicationUser
                 {
-                    UserName = "admin",
+                    UserName = adminEmail,   // <-- pakai email sebagai username (lebih aman)
                     Email = adminEmail,
                     FullName = "Administrator",
                     EmailConfirmed = true,
                     CreatedAt = DateTime.UtcNow
                 };
 
-                var result = await userManager.CreateAsync(user, "Admin123!");
-                if (result.Succeeded)
+                var createResult = await userManager.CreateAsync(adminUser, adminPassword);
+
+                if (!createResult.Succeeded)
                 {
-                    await userManager.AddToRoleAsync(user, "Admin");
+                    throw new Exception("Admin creation failed: " 
+                        + string.Join(", ", createResult.Errors.Select(e => e.Description)));
                 }
+            }
+
+            // Selalu assign role Admin meski user sudah ada
+            if (!await userManager.IsInRoleAsync(adminUser, "Admin"))
+            {
+                await userManager.AddToRoleAsync(adminUser, "Admin");
             }
         }
     }

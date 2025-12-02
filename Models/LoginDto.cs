@@ -1,3 +1,6 @@
+// Models/LoginDto.cs
+namespace KriptoProyek.Models;
+
 public class LoginDto
 {
     public string Email { get; set; }

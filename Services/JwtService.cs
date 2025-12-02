@@ -4,6 +4,8 @@ using System.Security.Claims;
 using System.Text;
 using KriptoProyek.Models;
 
+namespace KriptoProyek.Services;
+
 public class JwtService
 {
     private readonly IConfiguration _configuration;
@@ -19,8 +21,8 @@ public class JwtService
         var claims = new List<Claim>
         {
             new Claim(ClaimTypes.NameIdentifier, user.Id),
-            new Claim(ClaimTypes.Name, user.UserName),
-            new Claim(ClaimTypes.Email, user.Email),
+            new Claim(ClaimTypes.Name, user.UserName ?? user.Email ?? ""),
+            new Claim(ClaimTypes.Email, user.Email ?? ""),
             new Claim("FullName", user.FullName)
         };
 
@@ -31,8 +33,8 @@ public class JwtService
         }
 
         // Buat signing key dari secret
-        var key = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(_configuration["JwtSettings:Secret"]));
+        var secret = _configuration["JwtSettings:Secret"] ?? throw new InvalidOperationException("JWT Secret not configured");
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
         
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
@@ -49,10 +51,11 @@ public class JwtService
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 
-    public ClaimsPrincipal ValidateToken(string token)
+    public ClaimsPrincipal? ValidateToken(string token)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.UTF8.GetBytes(_configuration["JwtSettings:Secret"]);
+        var secret = _configuration["JwtSettings:Secret"] ?? throw new InvalidOperationException("JWT Secret not configured");
+        var key = Encoding.UTF8.GetBytes(secret);
 
         try
         {

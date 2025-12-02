@@ -1,3 +1,6 @@
+// Models/RegisterDto.cs
+namespace KriptoProyek.Models;
+
 public class RegisterDto
 {
     public string Email { get; set; }

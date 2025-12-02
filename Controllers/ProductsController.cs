@@ -1,6 +1,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using KriptoProyek.Models;
+using KriptoProyek.Data;
+
+namespace KriptoProyek.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
